@@ -1,25 +1,25 @@
-import React from 'react';
-import logo from './logo.svg';
+import {
+  RouterProvider,
+  createBrowserRouter
+} from "react-router-dom";
+import 'react-toastify/dist/ReactToastify.css';
 import './App.css';
 
+import { Provider } from 'react-redux';
+import { ROUTES } from './constant/routes';
+import './i18n';
+import { store } from './store';
+import { ToastContainer } from 'react-toastify';
+
 function App() {
+  const router=createBrowserRouter(ROUTES);
+ 
+  
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Provider store={store}>
+      <ToastContainer/>
+      <RouterProvider router={router}/>
+    </Provider>
   );
 }
 

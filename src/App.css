@@ -1,38 +1,122 @@
-.App {
-  text-align: center;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
 }
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+html {
+  font-family: 'Roboto', sans-serif;
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+@layer base {
+  body {
+    @apply bg-[#06202A] text-gray-300;
   }
 }
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+.arrow {
   color: white;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
 }
-
-.App-link {
-  color: #61dafb;
+.img-gradient {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  background-image: linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.8) 0,
+    transparent 60%,
+    rgba(0, 0, 0, 0.8)
+  );
 }
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+input {
+  position: relative;
+}
+input:focus::placeholder {
+  position: absolute;
+  top: 0px;
+  z-index: 10;
+  opacity: 1;
+  font-size: 0.8rem;
+  transition: 0.1s all ease-out;
+}
+input:focus {
+  padding-top: 5px;
+  outline: none;
+}
+input:not(:focus)::placeholder {
+  transition: 0.1s all ease-in;
+}
+.img {
+  position: relative !important;
+}
+.video {
+  transform: translate(-50%, -50%);
+}
+.card {
+  border: 2px solid hsla(0, 0%, 100%, 0.25);
+  box-shadow: 0 0 2em 0 #000;
+  width: 70%;
+  margin: 0 auto;
+  padding: 0.5rem 1rem;
+  border-radius: 0.75rem;
+  bottom: 8%;
+  left: 50%;
+  transform: translate(-50%);
+  background-color: #000;
+}
+.movies {
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  width: 90vw;
+  max-width: 1170px;
+  display: grid;
+  gap: 2rem;
+  margin: 0 auto;
+  padding-bottom: 5rem;
+  padding-top: 3rem;
+}
+.movie {
+  position: relative;
+  overflow: hidden;
+}
+.movie img {
+  width: 100%;
+  height: 400px;
+  display: block;
+  object-fit: cover;
+}
+.movie-info {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 0.5rem 1rem;
+  background: rgba(0, 0, 0, 0.6);
+  transform: translateY(100%);
+  transition: all 0.3s linear;;
+}
+.movie-info h4 {
+  color: #fff;
+  margin-bottom: 0.25rem;
+}
+.movie-info p {
+  margin-bottom: 0;
+  color: #fff;
+}
+.movie:hover .movie-info {
+  transform: translateY(0);
+}
+::-webkit-scrollbar-thumb {
+  background-color: #d6dee1;
+  border-radius: 20px;
+  border: 6px solid transparent;
+  background-clip: content-box;
+}
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+::-webkit-scrollbar {
+  width: 20px;
 }
