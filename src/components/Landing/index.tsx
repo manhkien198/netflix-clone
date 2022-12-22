@@ -1,14 +1,14 @@
-import Banner from './Banner';
-import GeneralSection from './GeneralSection';
-import Media from './Media';
+import { useTranslation } from 'react-i18next';
 import Download from '../../assets/images/download-icon.gif';
 import Kids from '../../assets/images/kids.png';
 import Mobile from '../../assets/images/mobile.jpg';
 import Phone from '../../assets/images/phone.jpg';
 import Stranger from '../../assets/images/stranger.png';
+import Banner from './Banner';
+import GeneralSection from './GeneralSection';
+import Media from './Media';
 import Nav from './Nav';
 import Questions from './Questions';
-import { useTranslation } from 'react-i18next';
 
 export default function Landing () {
     const {t}=useTranslation()
