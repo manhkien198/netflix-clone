@@ -17,7 +17,7 @@ function App() {
   
   return (
     <Provider store={store}>
-      <ToastContainer/>
+      <ToastContainer limit={3}/>
       <RouterProvider router={router}/>
     </Provider>
   );
