@@ -1,17 +1,17 @@
-
 import i18n from 'i18next';
 import { ChangeEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { TbWorld } from 'react-icons/tb';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { selectCommon, setLang } from '../../store/slices/common';
 import { signInWithGoogle } from '../../services/firebase';
 const Nav = () => {
-  const {lang} = useAppSelector(selectCommon)
-  console.log('lang :', lang);
+  const { lang } = useAppSelector(selectCommon);
+  const location = useLocation();
+  const isSignIn = location.pathname.includes('signin');
   const { t } = useTranslation();
-  const dispatch= useAppDispatch()
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const optionLang = [
     {
@@ -25,7 +25,7 @@ const Nav = () => {
   ];
   const handleChangeLang = (e: ChangeEvent<HTMLSelectElement>) => {
     i18n.changeLanguage(e.target.value);
-    dispatch(setLang(e.target.value))
+    dispatch(setLang(e.target.value));
   };
   return (
     <nav className='px-10 py-5 relative z-20'>
@@ -47,35 +47,38 @@ const Nav = () => {
             </g>
           </svg>
         </a>
-        <div className='flex flex-row relative gap-4'>
-          <div className='text-white text-2xl absolute top-[50%] translate-y-[-50%] left-1'>
-            <TbWorld />
+        {!isSignIn && (
+          <div className='flex flex-row relative gap-4'>
+            <div className='text-white text-2xl absolute top-[50%] translate-y-[-50%] left-1'>
+              <TbWorld />
+            </div>
+            <div className='arrow sm:right-[47%] lg:right-[40%] md:right-[50%]'>
+              ▼
+            </div>
+            <select
+              onChange={handleChangeLang}
+              value={lang}
+              className='text-white text-[1rem] bg-transparent appearance-none px-5 pl-7 py-1 border-white border rounded lg:text-2xl sm:text-xl md:w-[12rem] sm:w-[8rem]'
+            >
+              {optionLang.map((option) => (
+                <option
+                  className='text-black'
+                  key={option.locale}
+                  value={option.locale}
+                >
+                  {option.label}
+                </option>
+              ))}
+            </select>
+
+            <button
+              onClick={() => navigate('/signin')}
+              className='font-normal text-white py-2 px-4 bg-[#e50914] rounded text-[1rem]'
+            >
+              {t('signin')}
+            </button>
           </div>
-          <div className='arrow sm:right-[47%] lg:right-[40%] md:right-[50%]'>
-            ▼
-          </div>
-          <select
-            onChange={handleChangeLang}
-            value={lang}
-            className='text-white text-[1rem] bg-transparent appearance-none px-5 pl-7 py-1 border-white border rounded lg:text-2xl sm:text-xl md:w-[12rem] sm:w-[8rem]'
-          >
-            {optionLang.map((option) => (
-              <option
-                className='text-black'
-                key={option.locale}
-                value={option.locale}
-              >
-                {option.label}
-              </option>
-            ))}
-          </select>
-          <button
-          onClick={()=>signInWithGoogle().then((result) =>console.log(result))}
-            className='font-normal text-white py-2 px-4 bg-[#e50914] rounded text-[1rem]'
-          >
-            {t('signin')}
-          </button>
-        </div>
+        )}
       </div>
     </nav>
   );

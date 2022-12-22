@@ -24,6 +24,11 @@ html {
   position: absolute;
   inset: 0;
   background: rgba(0, 0, 0, 0.4);
+  background-size: cover;
+  opacity: 0.5;
+  display: block;
+  color: #fff;
+  z-index: -1;
   background-image: linear-gradient(
     0deg,
     rgba(0, 0, 0, 0.8) 0,
@@ -95,7 +100,7 @@ input:not(:focus)::placeholder {
   padding: 0.5rem 1rem;
   background: rgba(0, 0, 0, 0.6);
   transform: translateY(100%);
-  transition: all 0.3s linear;;
+  transition: all 0.3s linear;
 }
 .movie-info h4 {
   color: #fff;

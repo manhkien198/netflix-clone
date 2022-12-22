@@ -1,42 +1,22 @@
-import * as React from 'react';
-
-import { ElementsConsumer, CardElement } from "@stripe/react-stripe-js";
-function CheckoutForm(props:any){
-  const { stripe, elements } = props;
-  if (!stripe || !elements) {
-    return;
-  }
-
-  const card = elements.getElement(CardElement);
-  const result = await stripe.createToken(card);
-  if (result.error) {
-    console.log(result.error.message);
-  } else {
-    console.log(result.token);
-    // pass the token to your backend API
-  }
-    return (
-      <div>
-        <div className="product-info">
-          <h3 className="product-title">Apple MacBook Pro</h3>
-          <h4 className="product-price">$999</h4>
-        </div>
-        <form>
-          <CardSection />
-          <button className="btn-pay">Buy Now</button>
-        </form>
-      </div>
-    );
-}
-export interface SignInProps {
-}
-
-export default function SignIn (props: SignInProps) {
+import Layout from '../../../shared/Layout/index';
+import Bg from '../../../assets/images/bg.jpg';
+export default function SignIn() {
   return (
-    <ElementsConsumer>
-      {({ stripe, elements }) => (
-        <CheckoutForm stripe={stripe} elements={elements} />
-      )}
-    </ElementsConsumer>
+    <Layout>
+      <div className='img-gradient'>
+        <img
+          src={Bg}
+          alt='background'
+          className='w-full h-full absolute inset-0'
+        />
+      </div>
+      <div className='bg-transparent min-h-full max-w-[450px] mx-auto mb-[-236px] relative'>
+        <div className='pb-10 px-16 pt-16 min-h-[660px] bg-black opacity-70 rounded flex flex-col box-border'>
+          <div className='grow'>
+            <h2 className='text-white text-3xl font-bold'>Sign In</h2>
+          </div>
+        </div>
+      </div>
+    </Layout>
   );
 }

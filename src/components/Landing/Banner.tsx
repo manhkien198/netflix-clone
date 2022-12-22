@@ -7,8 +7,9 @@ const Banner = () => {
   return (
     <>
       <div className='sm:h-[643px] md:h-[807px] lg:h-[767.094px] absolute inset-0  border-b-8 border-[#222] b-0'>
-        <img src={Bg} alt='background banner'  />
-        <div className='img-gradient z-10'></div>
+        <div className='img-gradient z-10'>
+          <img src={Bg} alt='background banner' className='w-full h-full' />
+        </div>
       </div>
       <div className='relative z-20 mx-auto max-w-[950px] text-center py-[100px] sm:px-[3%] md:px-[5%] max-h-[563px]'>
         <h1 className='text-5xl text-white font-bold mx-32'>{t('slogan')}</h1>

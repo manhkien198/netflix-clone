@@ -4,19 +4,18 @@ import Kids from '../../assets/images/kids.png';
 import Mobile from '../../assets/images/mobile.jpg';
 import Phone from '../../assets/images/phone.jpg';
 import Stranger from '../../assets/images/stranger.png';
+import Layout from '../../shared/Layout';
 import Banner from './Banner';
 import GeneralSection from './GeneralSection';
 import Media from './Media';
-import Nav from './Nav';
 import Questions from './Questions';
 
-export default function Landing () {
-    const {t}=useTranslation()
+export default function Landing() {
+  const { t } = useTranslation();
   return (
-    <div>
-      <Nav />
+    <Layout>
       <Banner />
-      <Media/>
+      <Media />
       <GeneralSection
         title={t('titleSecondSection')}
         desc={t('descSecondSection')}
@@ -64,9 +63,6 @@ export default function Landing () {
         image={<img className='img' src={Phone} alt='Phone' />}
       />
       <Questions />
-      <footer className='text-center text-white text-slate-500 bg-black py-5'>
-        Netflix VietNam
-      </footer>
-    </div>
+    </Layout>
   );
 }
