@@ -2,7 +2,7 @@ import i18n from 'i18next';
 import { ChangeEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { TbWorld } from 'react-icons/tb';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { selectCommon, setLang } from '../../store/slices/common';
 import { signInWithGoogle } from '../../services/firebase';
@@ -30,7 +30,7 @@ const Nav = () => {
   return (
     <nav className='px-10 py-5 relative z-20'>
       <div className='flex flex-row justify-between'>
-        <a href='/' className=''>
+        <Link to='/'>
           <svg
             fill='#e50914'
             viewBox='0 0 111 30'
@@ -46,23 +46,20 @@ const Nav = () => {
               ></path>
             </g>
           </svg>
-        </a>
+        </Link>
         {!isSignIn && (
           <div className='flex flex-row relative gap-4'>
             <div className='text-white text-2xl absolute top-[50%] translate-y-[-50%] left-1'>
               <TbWorld />
             </div>
-            <div className='arrow sm:right-[47%] lg:right-[40%] md:right-[50%]'>
-              ▼
-            </div>
             <select
               onChange={handleChangeLang}
               value={lang}
-              className='text-white text-[1rem] bg-transparent appearance-none px-5 pl-7 py-1 border-white border rounded lg:text-2xl sm:text-xl md:w-[12rem] sm:w-[8rem]'
+              className='lang appearance-none text-white text-base bg-transparent px-3 pl-7 border-white border rounded lg:text-2xl sm:text-xl md:w-[10.5rem] sm:w-[8rem]'
             >
               {optionLang.map((option) => (
                 <option
-                  className='text-black'
+                  className='text-black text-base'
                   key={option.locale}
                   value={option.locale}
                 >
@@ -73,7 +70,7 @@ const Nav = () => {
 
             <button
               onClick={() => navigate('/signin')}
-              className='font-normal text-white py-2 px-4 bg-[#e50914] rounded text-[1rem]'
+              className='font-normal text-white px-2 bg-[#e50914] rounded text-base'
             >
               {t('signin')}
             </button>

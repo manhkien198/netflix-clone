@@ -4,7 +4,7 @@ interface InitStateProps {
   user: any;
 }
 const initialState: InitStateProps = {
-  user: {},
+  user: null,
 };
 export const authSlice = createSlice({
   name: 'auth',
@@ -13,8 +13,10 @@ export const authSlice = createSlice({
     login: (state, action) => {
       state.user = action.payload;
     },
+    logout: (state) => {
+      state.user = null;}
   },
 });
-export const { login } = authSlice.actions;
+export const { login,logout } = authSlice.actions;
 export const authSelect = (state: RootState) => state.auth;
 export default authSlice.reducer;

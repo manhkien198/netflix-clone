@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { MdArrowForwardIos } from 'react-icons/md';
 import Bg from '../../assets/images/bg.jpg';
+import { Link } from 'react-router-dom';
 
 const Banner = () => {
   const { t } = useTranslation();
@@ -11,25 +12,27 @@ const Banner = () => {
           <img src={Bg} alt='background banner' className='w-full h-full' />
         </div>
       </div>
-      <div className='relative z-20 mx-auto max-w-[950px] text-center py-[100px] sm:px-[3%] md:px-[5%] max-h-[563px]'>
+      <div className='relative z-20 mx-auto max-w-[950px] text-center sm:py-[20px] md:py-[100px] sm:px-[3%] md:px-[5%] max-h-[563px]'>
         <h1 className='text-5xl text-white font-bold mx-32'>{t('slogan')}</h1>
         <h2 className='py-4 px-10 text-3xl text-white'>{t('subtitle')}</h2>
         <form>
           <h3 className='text-xl text-white mx-16 pb-10'>
             {t('titleAddMail')}
           </h3>
-          <div className='flex max-w-[700px] mx-auto'>
-            <div className='grow'>
+          <div className='flex max-w-[700px] md:flex-row md:gap-0 md:items-stretch sm:items-center sm:flex-col sm:gap-5 mx-auto'>
+            <div className='grow  sm:w-[500px]'>
               <input
                 type='text'
                 className='w-full h-full pl-5'
                 placeholder='Email address'
               />
             </div>
-            <button className='text-white py-2 px-4 bg-[#e50914] rounded-r text-[1.625rem] flex justify-center items-center'>
-              <span>Get Started</span>{' '}
-              <MdArrowForwardIos style={{ margin: 0 }} />
+            <Link to='/signup'>
+            <button className='px-2 py-[11px] bg-[#e50914] border-l border-solid border-black rounded-r-[2px] flex justify-center items-center'>
+              <span className='text-white text-[1.625rem] leading-none'>Get Started</span>{' '}
+              <MdArrowForwardIos />
             </button>
+            </Link>
           </div>
         </form>
       </div>
