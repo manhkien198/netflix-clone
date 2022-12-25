@@ -10,7 +10,7 @@ import GeneralSection from './GeneralSection';
 import Media from './Media';
 import Questions from './Questions';
 
-export default function Landing() {
+export default function SignIn() {
   const { t } = useTranslation();
   return (
     <Layout>

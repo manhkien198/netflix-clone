@@ -17,8 +17,8 @@ export interface Movie {
   vote_average: number;
   vote_count: number;
 }
-export interface HeaderProps {
+
+export interface NavProps {
   title: string;
-  icon: IconType;
   url: string;
 }

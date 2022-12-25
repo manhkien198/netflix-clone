@@ -1,7 +1,5 @@
-import { HeaderProps } from '../models/index';
-import { AiOutlineHome, AiOutlineUser } from 'react-icons/ai';
-import { RxLightningBolt } from 'react-icons/rx';
 import i18n from '../i18n';
+import { NavProps } from '../models/index';
 export interface Question {
   id: number;
   show: boolean;
@@ -46,20 +44,17 @@ export const LIST_QUESTIONS: Question[] = [
     answer: i18n.t('answer6'),
   },
 ];
-export const HEADER_LIST: HeaderProps[] = [
+export const NAV: NavProps[] = [
   {
-    title: 'HOME',
-    icon: AiOutlineHome,
+    title: 'Home',
     url: '/home',
   },
   {
-    title: 'TRENDING',
-    icon: RxLightningBolt,
-    url: '/home',
+    title: 'Tv Shows',
+    url: '/tvshow',
   },
   {
-    title: 'ACCOUNT',
-    icon: AiOutlineUser,
-    url: '/home',
+    title: 'Movies',
+    url: '/movies',
   },
 ];

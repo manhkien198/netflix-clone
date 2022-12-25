@@ -1,15 +1,22 @@
 import i18n from 'i18next';
-import { ChangeEvent } from 'react';
+import { ChangeEvent, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { IoMdArrowDropdown } from 'react-icons/io';
 import { TbWorld } from 'react-icons/tb';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import Avatar from '../../assets/images/Netflix-avatar.png';
+import { useOnClickOutside } from '../../shared/hooks/useClickOutSide';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { authSelect } from '../../store/slices/authSlice';
 import { selectCommon, setLang } from '../../store/slices/common';
-import { signInWithGoogle } from '../../services/firebase';
+import { logout } from '../../store/slices/authSlice';
+import { NAV } from '../../constant';
+import { NavProps } from '../../models/index';
 const Nav = () => {
   const { lang } = useAppSelector(selectCommon);
-  const location = useLocation();
-  const isSignIn = location.pathname.includes('signin');
+  const user = localStorage.getItem('user');
+  const optionRef = useRef(null);
+  const [show, setShow] = useState(false);
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -27,6 +34,7 @@ const Nav = () => {
     i18n.changeLanguage(e.target.value);
     dispatch(setLang(e.target.value));
   };
+  useOnClickOutside(optionRef, () => setShow(!show));
   return (
     <nav className='px-10 py-5 relative z-20'>
       <div className='flex flex-row justify-between'>
@@ -47,7 +55,18 @@ const Nav = () => {
             </g>
           </svg>
         </Link>
-        {!isSignIn && (
+        {user && (
+          <ul className='flex gap-5 grow ml-10'>
+            {NAV.map((item: NavProps) => (
+              <li>
+                <Link to={item.url} className='text-slate-400 hover:text-white'>
+                  {item.title}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        )}
+        {!user ? (
           <div className='flex flex-row relative gap-4'>
             <div className='text-white text-2xl absolute top-[50%] translate-y-[-50%] left-1'>
               <TbWorld />
@@ -69,12 +88,39 @@ const Nav = () => {
             </select>
 
             <button
-              onClick={() => navigate('/signin')}
+              onClick={() => navigate('/signin/form')}
               className='font-normal text-white px-2 bg-[#e50914] rounded text-base'
             >
               {t('signin')}
             </button>
           </div>
+        ) : (
+          <button className='relative' onClick={() => setShow(!show)}>
+            <div className='absolute right-[-50%] top-[50%] translate-y-[-50%]'>
+              <IoMdArrowDropdown />
+            </div>
+            <img src={Avatar} alt='netflix avatar' className='w-8 h-8' />
+            {show && (
+              <ul
+                ref={optionRef}
+                className='absolute  right-[-50%] mt-5 bg-[rgba(0,0,0,0.4)]'
+              >
+                <li className='py-2 px-5 text-right hover:bg-slate-400'>
+                  <Link to='/profile'>Profile</Link>
+                </li>
+                <li
+                  className='py-2 px-5 text-right hover:bg-slate-400'
+                  onClick={() => {
+                    dispatch(logout);
+                    localStorage.removeItem('user');
+                    navigate('/signin');
+                  }}
+                >
+                  SignOut
+                </li>
+              </ul>
+            )}
+          </button>
         )}
       </div>
     </nav>

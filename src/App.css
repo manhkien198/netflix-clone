@@ -11,17 +11,17 @@ html {
 }
 @layer base {
   body {
-    @apply bg-[#06202A] text-gray-300 min-h-screen	;
+    @apply bg-[#06202A] text-gray-300 min-h-screen;
   }
 }
-#root{
-  @apply min-h-screen	
+#root {
+  @apply min-h-screen;
 }
-.lang{
-  background-image:url('./assets/images/down-arrow.png');
+.lang {
+  background-image: url('./assets/images/down-arrow.png');
   background-repeat: no-repeat;
   background-position: right 0.7rem top 50%;
-  background-size: 1rem ;
+  background-size: 1rem;
 }
 .img-gradient {
   position: absolute;
@@ -41,8 +41,9 @@ html {
 }
 input {
   position: relative;
-  padding: .85rem 1rem;
+  padding: 0.85rem 1rem;
   width: 100%;
+  color: #000;
 }
 input:focus::placeholder {
   position: absolute;
@@ -55,7 +56,7 @@ input:focus::placeholder {
 input:focus {
   padding-top: 5px;
   outline: none;
-  padding: .75rem 1rem;
+  padding: 0.85rem 1rem;
   width: 100%;
 }
 input:not(:focus)::placeholder {

@@ -1,25 +1,39 @@
-import {
-  RouterProvider,
-  createBrowserRouter
-} from "react-router-dom";
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
 import './App.css';
 
-import { Provider } from 'react-redux';
+import { useEffect } from 'react';
+import { ToastContainer } from 'react-toastify';
 import { ROUTES } from './constant/routes';
 import './i18n';
-import { store } from './store';
-import { ToastContainer } from 'react-toastify';
+import { auth } from './services/firebase';
+import { useAppDispatch } from './store/hooks';
+import { login, logout } from './store/slices/authSlice';
 
 function App() {
-  const router=createBrowserRouter(ROUTES);
- 
-  
+  const router = createBrowserRouter(ROUTES);
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    const unsubcribe = auth.onAuthStateChanged((authUser) => {
+      if (authUser) {
+        dispatch(
+          login({
+            uid: authUser.uid,
+            email: authUser.email,
+          })
+        );
+      } else {
+        dispatch(logout);
+      }
+    });
+    return unsubcribe;
+  }, []);
+
   return (
-    <Provider store={store}>
-      <ToastContainer limit={3}/>
-      <RouterProvider router={router}/>
-    </Provider>
+    <>
+      <ToastContainer limit={3} />
+      <RouterProvider router={router} />
+    </>
   );
 }
 
