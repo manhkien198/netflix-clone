@@ -106,7 +106,7 @@ const Nav = () => {
                 className='absolute  right-[-50%] mt-5 bg-[rgba(0,0,0,0.4)]'
               >
                 <li className='py-2 px-5 text-right hover:bg-slate-400'>
-                  <Link to='/profile'>Profile</Link>
+                  <Link to='/profile'>{t('profile')}</Link>
                 </li>
                 <li
                   className='py-2 px-5 text-right hover:bg-slate-400'
@@ -116,7 +116,7 @@ const Nav = () => {
                     navigate('/signin');
                   }}
                 >
-                  SignOut
+                  {t('signOut')}
                 </li>
               </ul>
             )}

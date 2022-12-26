@@ -36,7 +36,7 @@ const Banner = () => {
             <Link to='/signin' state={{ email }}>
               <button className='px-2 py-[11px] bg-[#e50914] border-l border-solid border-black rounded-r-[2px] flex justify-center items-center'>
                 <span className='text-white text-[1.625rem] leading-none'>
-                  Get Started
+                  {t('getStarted')}
                 </span>{' '}
                 <MdArrowForwardIos />
               </button>

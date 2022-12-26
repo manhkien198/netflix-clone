@@ -27,7 +27,6 @@ html {
   position: absolute;
   inset: 0;
   background: rgba(0, 0, 0, 0.4);
-  background-size: cover;
   opacity: 0.5;
   display: block;
   color: #fff;
@@ -79,6 +78,7 @@ input:not(:focus)::placeholder {
   left: 50%;
   transform: translate(-50%);
   background-color: #000;
+  background-size: cover;
 }
 .movies {
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
@@ -121,15 +121,25 @@ input:not(:focus)::placeholder {
 .movie:hover .movie-info {
   transform: translateY(0);
 }
-::-webkit-scrollbar-thumb {
-  background-color: #d6dee1;
-  border-radius: 20px;
-  border: 6px solid transparent;
-  background-clip: content-box;
-}
-::-webkit-scrollbar-track {
-  background-color: transparent;
-}
 ::-webkit-scrollbar {
-  width: 20px;
+  width: 0px;
+}
+.card {
+  flex-shrink: 0;
+  width: 300px;
+  height: 200px;
+  border-radius: 10px;
+  margin-left: 10px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  animation: .5s all shake;
+}
+@keyframes shake {
+  from{
+    transform: rotate(0deg);
+  }
+  to{
+    transform: rotate(25deg);
+  }
 }
