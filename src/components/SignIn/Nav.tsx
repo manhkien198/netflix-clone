@@ -58,7 +58,7 @@ const Nav = () => {
         {user && (
           <ul className='flex gap-5 grow ml-10'>
             {NAV.map((item: NavProps) => (
-              <li>
+              <li key={item.title}>
                 <Link to={item.url} className='text-slate-400 hover:text-white'>
                   {item.title}
                 </Link>
@@ -103,9 +103,9 @@ const Nav = () => {
             {show && (
               <ul
                 ref={optionRef}
-                className='absolute  right-[-50%] mt-5 bg-[rgba(0,0,0,0.4)]'
+                className='absolute min-w-[130px] right-[-50%] mt-5 bg-[rgba(0,0,0,0.4)]'
               >
-                <li className='py-2 px-5 text-right hover:bg-slate-400'>
+                <li className='py-2 px-5 text-right hover:bg-slate-400 border-b border-slate-500'>
                   <Link to='/profile'>{t('profile')}</Link>
                 </li>
                 <li

@@ -124,6 +124,12 @@ input:not(:focus)::placeholder {
 ::-webkit-scrollbar {
   width: 0px;
 }
+.container {
+  display: flex;
+  overflow-x: scroll;
+  width: 100%;
+  padding: 20px 0;
+}
 .card {
   flex-shrink: 0;
   width: 300px;
@@ -133,13 +139,4 @@ input:not(:focus)::placeholder {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
-  animation: .5s all shake;
-}
-@keyframes shake {
-  from{
-    transform: rotate(0deg);
-  }
-  to{
-    transform: rotate(25deg);
-  }
 }

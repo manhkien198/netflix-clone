@@ -13,9 +13,17 @@ export const ROUTES: RouteObject[] = [
     path: '/',
     element: <ProtectedRoute children={<Home />} />,
     children: [
-      { path: 'movies', element: <Movies /> },
-      { path: 'tvshows', element: <TvShows /> },
-      { path: 'movies/:id', element: <MovieDetail /> },
+      {
+        path: 'movies',
+        element: <Movies />,
+        children: [
+          {
+            path: '/movies/:id',
+            element: <ProtectedRoute children={<MovieDetail />} />,
+          },
+        ],
+      },
+      { path: 'tvshows', element: <ProtectedRoute children={<TvShows />} /> },
     ],
   },
   {

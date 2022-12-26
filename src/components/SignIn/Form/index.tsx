@@ -2,12 +2,13 @@ import Layout from '../../../shared/Layout/index';
 import Bg from '../../../assets/images/bg.jpg';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useRef } from 'react';
-import { auth } from '../../../services/firebase';
+import db, { auth } from '../../../services/firebase';
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from 'firebase/auth';
 import { toast } from 'react-toastify';
+import { setDoc, doc } from 'firebase/firestore';
 export default function SignInForm() {
   const { state } = useLocation();
   const navigate = useNavigate();
@@ -24,6 +25,12 @@ export default function SignInForm() {
       )
         .then((authUser) => {
           if (authUser) {
+            (async () => {
+              await setDoc(doc(db, 'customers'), {
+                id: authUser.user.uid,
+                email: authUser.user.email,
+              });
+            })();
             toast.success('Sign up sucessfully');
           }
         })

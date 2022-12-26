@@ -58,3 +58,4 @@ export const NAV: NavProps[] = [
     url: '/movies',
   },
 ];
+export const SKELETON_COUNTS = 10;
