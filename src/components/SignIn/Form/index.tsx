@@ -8,7 +8,7 @@ import {
   signInWithEmailAndPassword,
 } from 'firebase/auth';
 import { toast } from 'react-toastify';
-import { setDoc, doc } from 'firebase/firestore';
+import { collection, addDoc } from 'firebase/firestore';
 export default function SignInForm() {
   const { state } = useLocation();
   const navigate = useNavigate();
@@ -25,12 +25,13 @@ export default function SignInForm() {
       )
         .then((authUser) => {
           if (authUser) {
-            (async () => {
-              await setDoc(doc(db, 'customers'), {
-                id: authUser.user.uid,
-                email: authUser.user.email,
-              });
-            })();
+            // (async () => {
+            //   await addDoc(collection(db, "customers"), {
+            //     id: authUser.user.uid,
+            //     email: authUser.user.email,
+            //   });
+
+            // })();
             toast.success('Sign up sucessfully');
           }
         })

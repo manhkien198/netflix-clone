@@ -3,7 +3,7 @@ import { ChangeEvent, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { IoMdArrowDropdown } from 'react-icons/io';
 import { TbWorld } from 'react-icons/tb';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import Avatar from '../../assets/images/Netflix-avatar.png';
 import { useOnClickOutside } from '../../shared/hooks/useClickOutSide';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
@@ -12,14 +12,18 @@ import { selectCommon, setLang } from '../../store/slices/common';
 import { logout } from '../../store/slices/authSlice';
 import { NAV } from '../../constant';
 import { NavProps } from '../../models/index';
+import { signOut } from 'firebase/auth';
+import { auth } from '../../services/firebase';
 const Nav = () => {
   const { lang } = useAppSelector(selectCommon);
   const user = localStorage.getItem('user');
   const optionRef = useRef(null);
+  const location = useLocation();
   const [show, setShow] = useState(false);
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const isProfile: boolean = location.pathname.includes('profile');
   const optionLang = [
     {
       locale: 'en-US',
@@ -55,7 +59,7 @@ const Nav = () => {
             </g>
           </svg>
         </Link>
-        {user && (
+        {user && !isProfile && (
           <ul className='flex gap-5 grow ml-10'>
             {NAV.map((item: NavProps) => (
               <li key={item.title}>
@@ -113,6 +117,7 @@ const Nav = () => {
                   onClick={() => {
                     dispatch(logout);
                     localStorage.removeItem('user');
+                    signOut(auth);
                     navigate('/signin');
                   }}
                 >
