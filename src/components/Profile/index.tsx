@@ -22,14 +22,14 @@ export default function Profile() {
         <div className='flex mt-5 gap-5'>
           <img src={Avatar} alt='avatar' className='w-36 h-36' />
           <div className='grow'>
-            <h2 className='px-5 border py-2 bg-slate-600 mb-5'>{user.email}</h2>
+            <h2 className='px-5 border py-2 bg-slate-600 mb-5'>{user?.email}</h2>
             <div>
               <p className=' border-b text-xl font-bold border-slate-500'>
                 Plans
               </p>
               <Plans />
               <button
-                className='py-2 px-5 bg-red-500 mt-4 w-full'
+                className='py-2 px-5 bg-red-500 mt-6 w-full'
                 onClick={() => {
                   dispatch(logout);
                   localStorage.removeItem('user');

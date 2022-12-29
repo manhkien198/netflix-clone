@@ -1,4 +1,3 @@
-import { IconType } from 'react-icons/lib';
 
 export interface Movie {
   adult: boolean;
@@ -70,3 +69,4 @@ interface Recurring {
 }
 
 interface Metadata {}
+export type Entry<T> = { [K in keyof T]: [K, T[K]] }[keyof T]

@@ -1,20 +1,22 @@
-import Layout from '../../../shared/Layout/index';
-import Bg from '../../../assets/images/bg.jpg';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { useRef } from 'react';
-import db, { auth } from '../../../services/firebase';
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from 'firebase/auth';
+import { useRef } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { collection, addDoc } from 'firebase/firestore';
+import Bg from '../../../assets/images/bg.jpg';
+import { auth } from '../../../services/firebase';
+import Layout from '../../../shared/Layout/index';
+import { login } from '../../../store/slices/authSlice';
+import { useAppDispatch } from '../../../store/hooks';
 export default function SignInForm() {
   const { state } = useLocation();
   const navigate = useNavigate();
 
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
+  const dispatch=useAppDispatch()
   const register = (e: any) => {
     e.preventDefault();
     if (emailRef.current != null && passwordRef.current != null) {
@@ -50,10 +52,14 @@ export default function SignInForm() {
       )
         .then((authUser) => {
           if (authUser) {
+            dispatch(login({
+              id: authUser.user.uid,
+              email: authUser.user.email,
+            }))
             localStorage.setItem(
               'user',
               JSON.stringify({
-                uid: authUser.user.uid,
+                id: authUser.user.uid,
                 email: authUser.user.email,
               })
             );

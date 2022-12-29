@@ -129,6 +129,7 @@ input:not(:focus)::placeholder {
   overflow-x: scroll;
   width: 100%;
   padding: 20px 0;
+  max-width:100%
 }
 .card {
   flex-shrink: 0;

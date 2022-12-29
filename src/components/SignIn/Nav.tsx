@@ -110,7 +110,7 @@ const Nav = () => {
                 className='absolute min-w-[130px] right-[-50%] mt-5 bg-[rgba(0,0,0,0.4)]'
               >
                 <li className='py-2 px-5 text-right hover:bg-slate-400 border-b border-slate-500'>
-                  <Link to='/profile'>{t('profile')}</Link>
+                  <Link to='profile'>{t('profile')}</Link>
                 </li>
                 <li
                   className='py-2 px-5 text-right hover:bg-slate-400'
