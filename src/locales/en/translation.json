@@ -36,7 +36,9 @@
   "signOut":"Sign Out",
   "profile":"Profile",
   "play":"Play",
-  "info":"More Info"
+  "info":"More Info",
+  "subscribe":"Subscribe",
+  "subscribed":"Subscribed"
 
 
 }

@@ -1,11 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { RootState } from '../index';
-
+import { SubscriptionProps } from '../../models';
 interface InitProps{
-    lang:string
+    lang:string,
+    subscription:SubscriptionProps|null
 }
 const initialState:InitProps={
-    lang:localStorage.getItem('i18nextLng')||'en-US'
+    lang:'',
+    subscription:null
 }
 export const CommonSlice=createSlice({
     name:'common',
@@ -13,9 +15,11 @@ export const CommonSlice=createSlice({
     reducers:{
         setLang(state, action){
             state.lang=action.payload
+        },setSubscription(state,action){
+            state.subscription=action.payload
         }}
 })
-export const {setLang} = CommonSlice.actions
+export const {setLang,setSubscription} = CommonSlice.actions
 
 export const selectCommon = (state: RootState) => state.common
 export default CommonSlice.reducer

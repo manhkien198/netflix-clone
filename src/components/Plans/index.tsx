@@ -1,38 +1,40 @@
+import { loadStripe } from '@stripe/stripe-js';
 import {
   addDoc,
   collection,
   doc,
-  getDoc,
   getDocs,
   onSnapshot,
   query,
-  where,
+  where
 } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 import { Entry, ProductsProps } from '../../models';
 import db from '../../services/firebase';
-import { useAppSelector } from '../../store/hooks';
+import { useAppSelector, useAppDispatch } from '../../store/hooks';
 import { authSelect } from '../../store/slices/authSlice';
-import { toast } from 'react-toastify';
-import { loadStripe } from '@stripe/stripe-js';
+import { selectCommon, setSubscription } from '../../store/slices/common';
 
 export default function Plans() {
   const [products, setProducts] = useState<ProductsProps>();
   const { user } = useAppSelector(authSelect);
-  const [subscription, setSubscription] = useState<{ [key: string]: string }>();
-  console.log('subscription :', subscription);
+  const {subscription} = useAppSelector(selectCommon)
+  const dispatch=useAppDispatch()
+  const {t}=useTranslation()
   useEffect(() => {
     if (user?.id) {
       getDocs(
-        collection(collection(db, 'customers'), user.id, 'subscription')
+        collection(doc(db, 'customers', user.id), 'subscriptions')
       ).then((querySnapshot) => {
-        console.log('querySnapshot :', querySnapshot);
         querySnapshot.forEach(async (sub) => {
-          setSubscription({
+          dispatch(setSubscription({
             role: sub.data().role,
-            current_period_end: sub.data().current_period_end.second,
-            current_period_start: sub.data().current_period_start.second,
-          });
+            current_period_end: sub.data().current_period_end.seconds,
+            current_period_start: sub.data().current_period_start.seconds,
+          }))
+          
         });
       });
     }
@@ -87,20 +89,22 @@ export default function Plans() {
     <>
       {products &&
         Object.entries(products as ProductsProps)?.map(
-          ([productKey, productData]: Entry<ProductsProps>) => (
+          ([productKey, productData]: Entry<ProductsProps>) => {
+  const isCurrentPackage = productData.name?.toLowerCase().includes(subscription?.role as string)
+            return(
             <div className='flex justify-between mt-5' key={productKey}>
               <div>
                 <h5 className='text-xl'>{productData.name}</h5>
                 <h6>{productData.description}</h6>
               </div>
               <button
-                className='text-white bg-red-500 px-5 rounded '
+                className={isCurrentPackage?"text-black bg-slate-400 rounded px-5":'text-white bg-red-500 px-5 rounded'}
                 onClick={() => loadCheckout(productData.prices.priceId)}
               >
-                Subscribe
+               {!isCurrentPackage?t('subscribe'):t('subscribed')} 
               </button>
             </div>
-          )
+          )}
         )}
     </>
   );

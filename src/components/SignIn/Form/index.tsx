@@ -2,7 +2,7 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from 'firebase/auth';
-import { useRef } from 'react';
+import { FormEvent, useRef } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import Bg from '../../../assets/images/bg.jpg';
@@ -17,7 +17,7 @@ export default function SignInForm() {
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
   const dispatch=useAppDispatch()
-  const register = (e: any) => {
+  const register = (e: FormEvent) => {
     e.preventDefault();
     if (emailRef.current != null && passwordRef.current != null) {
       createUserWithEmailAndPassword(
@@ -27,13 +27,6 @@ export default function SignInForm() {
       )
         .then((authUser) => {
           if (authUser) {
-            // (async () => {
-            //   await addDoc(collection(db, "customers"), {
-            //     id: authUser.user.uid,
-            //     email: authUser.user.email,
-            //   });
-
-            // })();
             toast.success('Sign up sucessfully');
           }
         })
@@ -42,7 +35,7 @@ export default function SignInForm() {
         });
     }
   };
-  const signin = (e: any) => {
+  const signin = (e: FormEvent) => {
     e.preventDefault();
     if (emailRef.current != null && passwordRef.current != null) {
       signInWithEmailAndPassword(

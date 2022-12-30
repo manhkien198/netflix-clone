@@ -70,3 +70,8 @@ interface Recurring {
 
 interface Metadata {}
 export type Entry<T> = { [K in keyof T]: [K, T[K]] }[keyof T]
+export interface SubscriptionProps{
+  role:string;
+  current_period_end:string;
+  current_period_start:string
+}

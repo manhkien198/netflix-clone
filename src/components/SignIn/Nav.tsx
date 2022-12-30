@@ -16,7 +16,7 @@ import { signOut } from 'firebase/auth';
 import { auth } from '../../services/firebase';
 const Nav = () => {
   const { lang } = useAppSelector(selectCommon);
-  const user = localStorage.getItem('user');
+  const {user} = useAppSelector(authSelect)
   const optionRef = useRef(null);
   const location = useLocation();
   const [show, setShow] = useState(false);
@@ -109,8 +109,8 @@ const Nav = () => {
                 ref={optionRef}
                 className='absolute min-w-[130px] right-[-50%] mt-5 bg-[rgba(0,0,0,0.4)]'
               >
-                <li className='py-2 px-5 text-right hover:bg-slate-400 border-b border-slate-500'>
-                  <Link to='profile'>{t('profile')}</Link>
+                <li className='py-2 px-5 text-right hover:bg-slate-400 border-b border-slate-500' onClick={()=>navigate('/profile')}>
+                {t('profile')}
                 </li>
                 <li
                   className='py-2 px-5 text-right hover:bg-slate-400'
