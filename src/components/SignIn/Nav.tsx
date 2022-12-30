@@ -116,9 +116,9 @@ const Nav = () => {
                   className='py-2 px-5 text-right hover:bg-slate-400'
                   onClick={() => {
                     dispatch(logout);
-                    localStorage.removeItem('user');
+                    localStorage.removeItem('persist:root')
                     signOut(auth);
-                    navigate('/signin');
+                    window.location.replace(`${window.location.origin}/signin`)
                   }}
                 >
                   {t('signOut')}

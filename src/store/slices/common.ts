@@ -15,7 +15,8 @@ export const CommonSlice=createSlice({
     reducers:{
         setLang(state, action){
             state.lang=action.payload
-        },setSubscription(state,action){
+        },
+        setSubscription(state,action){
             state.subscription=action.payload
         }}
 })

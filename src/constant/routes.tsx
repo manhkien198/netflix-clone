@@ -11,19 +11,26 @@ import { ProtectedRoute } from '../shared/ProtectedRoute';
 export const ROUTES: RouteObject[] = [
   {
     path: '/',
-    element: <ProtectedRoute children={<Home />} />,
+    element: <ProtectedRoute/>,
     children: [
       {
-        path: 'movies',
-        element: <Movies />,
+        index:true,
+        element:<Home/>
+      },
+      {
+        path: '/movies',
         children: [
           {
-            path: 'movies/:id',
-            element: <ProtectedRoute children={<MovieDetail />} />,
+            path: '/movies/:id',
+            element: <MovieDetail />,
           },
         ],
       },
-      { path: 'tvshows', element: <ProtectedRoute children={<TvShows />} /> },
+      { path: '/tvshows', element: <TvShows /> },
+      {
+        path: '/profile',
+        element: <Profile />,
+      },
     ],
   },
   {
@@ -34,8 +41,5 @@ export const ROUTES: RouteObject[] = [
     path: '/signin/form',
     element: <SignInForm />,
   },
-  {
-    path: '/profile',
-    element: <Profile />,
-  },
+ 
 ];

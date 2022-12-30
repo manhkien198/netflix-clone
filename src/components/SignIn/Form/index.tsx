@@ -6,10 +6,12 @@ import { FormEvent, useRef } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import Bg from '../../../assets/images/bg.jpg';
-import { auth } from '../../../services/firebase';
+import db, { auth } from '../../../services/firebase';
 import Layout from '../../../shared/Layout/index';
 import { login } from '../../../store/slices/authSlice';
 import { useAppDispatch } from '../../../store/hooks';
+import { collection, doc, getDocs } from 'firebase/firestore';
+import { setSubscription } from '../../../store/slices/common';
 export default function SignInForm() {
   const { state } = useLocation();
   const navigate = useNavigate();
@@ -28,6 +30,7 @@ export default function SignInForm() {
         .then((authUser) => {
           if (authUser) {
             toast.success('Sign up sucessfully');
+            navigate('/signin')
           }
         })
         .catch((error) => {
@@ -49,14 +52,22 @@ export default function SignInForm() {
               id: authUser.user.uid,
               email: authUser.user.email,
             }))
-            localStorage.setItem(
-              'user',
-              JSON.stringify({
-                id: authUser.user.uid,
-                email: authUser.user.email,
-              })
-            );
-            navigate('/');
+            getDocs(
+              collection(doc(db, 'customers', authUser.user.uid), 'subscriptions')
+            ).then((querySnapshot) => {
+              querySnapshot.forEach(async (sub) => {
+                dispatch(setSubscription({
+                  role: sub.data().role,
+                  current_period_end: sub.data().current_period_end.seconds,
+                  current_period_start: sub.data().current_period_start.seconds,
+                }))
+                if(sub.data().role){
+                  navigate('/');
+                }else{
+                  navigate('/signin')
+                }
+              });
+            });
           }
         })
         .catch((error) => toast.error(error.message));

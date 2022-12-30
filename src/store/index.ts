@@ -1,10 +1,10 @@
 import { combineReducers, configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
 import CommonReducer from './slices/common';
-import { persistReducer, persistStore,PERSIST } from 'redux-persist';
+import { persistReducer, persistStore,PERSIST, PersistConfig } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
 import AuthReducer from './slices/authSlice';
-const persistConfig = {
+const persistConfig : PersistConfig<any>= {
   key: 'root',
   storage,
 }

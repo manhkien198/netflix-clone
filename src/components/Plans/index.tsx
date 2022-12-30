@@ -13,32 +13,16 @@ import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import { Entry, ProductsProps } from '../../models';
 import db from '../../services/firebase';
-import { useAppSelector, useAppDispatch } from '../../store/hooks';
+import { useAppSelector } from '../../store/hooks';
 import { authSelect } from '../../store/slices/authSlice';
-import { selectCommon, setSubscription } from '../../store/slices/common';
+import { selectCommon } from '../../store/slices/common';
 
 export default function Plans() {
   const [products, setProducts] = useState<ProductsProps>();
   const { user } = useAppSelector(authSelect);
   const {subscription} = useAppSelector(selectCommon)
-  const dispatch=useAppDispatch()
   const {t}=useTranslation()
-  useEffect(() => {
-    if (user?.id) {
-      getDocs(
-        collection(doc(db, 'customers', user.id), 'subscriptions')
-      ).then((querySnapshot) => {
-        querySnapshot.forEach(async (sub) => {
-          dispatch(setSubscription({
-            role: sub.data().role,
-            current_period_end: sub.data().current_period_end.seconds,
-            current_period_start: sub.data().current_period_start.seconds,
-          }))
-          
-        });
-      });
-    }
-  }, [user?.id]);
+  
 
   useEffect(() => {
     getDocs(
@@ -99,7 +83,7 @@ export default function Plans() {
               </div>
               <button
                 className={isCurrentPackage?"text-black bg-slate-400 rounded px-5":'text-white bg-red-500 px-5 rounded'}
-                onClick={() => loadCheckout(productData.prices.priceId)}
+                onClick={() => !isCurrentPackage&& loadCheckout(productData.prices.priceId)}
               >
                {!isCurrentPackage?t('subscribe'):t('subscribed')} 
               </button>

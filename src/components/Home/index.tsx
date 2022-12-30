@@ -4,9 +4,14 @@ import { FaPlay } from 'react-icons/fa';
 import Nav from '../SignIn/Nav';
 import Row from '../Row';
 import { api } from '../../api/api';
+import { useAppSelector } from '../../store/hooks';
+import { selectCommon } from '../../store/slices/common';
+import { Navigate } from 'react-router-dom';
 export default function Home() {
+  const {subscription}=useAppSelector(selectCommon)
   return (
-    <div>
+    <>
+    {subscription?(<div>
       <Nav />
       <div className='sm:h-[643px] md:h-[807px] lg:h-[767.094px]'>
         <div className='img-gradient z-10'>
@@ -34,6 +39,7 @@ export default function Home() {
       <div className='mt-10'>
         <Row api={api.getTopRated} title='Top Rated' />
       </div>
-    </div>
+    </div>):<Navigate to='/signin'/>}
+    </>
   );
 }
