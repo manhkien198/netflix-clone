@@ -1,29 +1,24 @@
+import { signOut } from 'firebase/auth';
 import i18n from 'i18next';
 import { ChangeEvent, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { IoMdArrowDropdown } from 'react-icons/io';
 import { TbWorld } from 'react-icons/tb';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Avatar from '../../assets/images/Netflix-avatar.png';
+import { auth } from '../../services/firebase';
 import { useOnClickOutside } from '../../shared/hooks/useClickOutSide';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { authSelect } from '../../store/slices/authSlice';
+import { authSelect, logout } from '../../store/slices/authSlice';
 import { selectCommon, setLang } from '../../store/slices/common';
-import { logout } from '../../store/slices/authSlice';
-import { NAV } from '../../constant';
-import { NavProps } from '../../models/index';
-import { signOut } from 'firebase/auth';
-import { auth } from '../../services/firebase';
 const Nav = () => {
   const { lang } = useAppSelector(selectCommon);
-  const {user} = useAppSelector(authSelect)
+  const { user } = useAppSelector(authSelect);
   const optionRef = useRef(null);
-  const location = useLocation();
   const [show, setShow] = useState(false);
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const isProfile: boolean = location.pathname.includes('profile');
   const optionLang = [
     {
       locale: 'en-US',
@@ -59,74 +54,67 @@ const Nav = () => {
             </g>
           </svg>
         </Link>
-        {user && !isProfile && (
-          <ul className='flex gap-5 grow ml-10'>
-            {NAV.map((item: NavProps) => (
-              <li key={item.title}>
-                <Link to={item.url} className='text-slate-400 hover:text-white'>
-                  {item.title}
-                </Link>
-              </li>
+        <div className='flex flex-row relative gap-4'>
+          <div className='text-white text-2xl absolute top-[50%] translate-y-[-50%] left-1'>
+            <TbWorld />
+          </div>
+          <select
+            onChange={handleChangeLang}
+            value={lang}
+            className='lang appearance-none text-white text-base bg-transparent px-3 pl-7 border-white border rounded lg:text-2xl sm:text-xl md:w-[10.5rem] sm:w-[8rem]'
+          >
+            {optionLang.map((option) => (
+              <option
+                className='text-black text-base'
+                key={option.locale}
+                value={option.locale}
+              >
+                {option.label}
+              </option>
             ))}
-          </ul>
-        )}
-        {!user ? (
-          <div className='flex flex-row relative gap-4'>
-            <div className='text-white text-2xl absolute top-[50%] translate-y-[-50%] left-1'>
-              <TbWorld />
-            </div>
-            <select
-              onChange={handleChangeLang}
-              value={lang}
-              className='lang appearance-none text-white text-base bg-transparent px-3 pl-7 border-white border rounded lg:text-2xl sm:text-xl md:w-[10.5rem] sm:w-[8rem]'
-            >
-              {optionLang.map((option) => (
-                <option
-                  className='text-black text-base'
-                  key={option.locale}
-                  value={option.locale}
-                >
-                  {option.label}
-                </option>
-              ))}
-            </select>
-
+          </select>
+          {!user ? (
             <button
               onClick={() => navigate('/signin/form')}
               className='font-normal text-white px-2 bg-[#e50914] rounded text-base'
             >
               {t('signin')}
             </button>
-          </div>
-        ) : (
-          <button className='relative' onClick={() => setShow(!show)}>
-            <div className='absolute right-[-50%] top-[50%] translate-y-[-50%]'>
-              <IoMdArrowDropdown />
-            </div>
-            <img src={Avatar} alt='netflix avatar' className='w-8 h-8' />
-            {show && (
-              <ul
-                ref={optionRef}
-                className='absolute min-w-[130px] right-[-50%] mt-5 bg-[rgba(0,0,0,0.4)]'
-              >
-                <li className='py-2 px-5 text-right hover:bg-slate-400 border-b border-slate-500' onClick={()=>navigate('/profile')}>
-                {t('profile')}
-                </li>
-                <li
-                  className='py-2 px-5 text-right hover:bg-slate-400'
-                  onClick={() => {
-                    dispatch(logout);
-                    localStorage.removeItem('persist:root')
-                    signOut(auth);
-                    window.location.replace(`${window.location.origin}/signin`)
-                  }}
+          ) : (
+            <button className='relative' onClick={() => setShow(!show)}>
+              <div className='absolute right-[-50%] top-[50%] translate-y-[-50%]'>
+                <IoMdArrowDropdown />
+              </div>
+              <img src={Avatar} alt='netflix avatar' className='w-8 h-8' />
+              {show && (
+                <ul
+                  ref={optionRef}
+                  className='absolute min-w-[130px] right-[-50%] mt-5 bg-[rgba(0,0,0,0.4)]'
                 >
-                  {t('signOut')}
-                </li>
-              </ul>
-            )}
-          </button>
-        )}
+                  <li
+                    className='py-2 px-5 text-right hover:bg-slate-400 border-b border-slate-500'
+                    onClick={() => navigate('/profile')}
+                  >
+                    {t('profile')}
+                  </li>
+                  <li
+                    className='py-2 px-5 text-right hover:bg-slate-400'
+                    onClick={() => {
+                      dispatch(logout);
+                      localStorage.removeItem('persist:root');
+                      signOut(auth);
+                      window.location.replace(
+                        `${window.location.origin}/signin`
+                      );
+                    }}
+                  >
+                    {t('signOut')}
+                  </li>
+                </ul>
+              )}
+            </button>
+          )}
+        </div>
       </div>
     </nav>
   );

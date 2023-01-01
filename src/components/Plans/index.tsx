@@ -6,7 +6,7 @@ import {
   getDocs,
   onSnapshot,
   query,
-  where
+  where,
 } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -20,9 +20,8 @@ import { selectCommon } from '../../store/slices/common';
 export default function Plans() {
   const [products, setProducts] = useState<ProductsProps>();
   const { user } = useAppSelector(authSelect);
-  const {subscription} = useAppSelector(selectCommon)
-  const {t}=useTranslation()
-  
+  const { subscription } = useAppSelector(selectCommon);
+  const { t } = useTranslation();
 
   useEffect(() => {
     getDocs(
@@ -74,21 +73,31 @@ export default function Plans() {
       {products &&
         Object.entries(products as ProductsProps)?.map(
           ([productKey, productData]: Entry<ProductsProps>) => {
-  const isCurrentPackage = productData.name?.toLowerCase().includes(subscription?.role as string)
-            return(
-            <div className='flex justify-between mt-5' key={productKey}>
-              <div>
-                <h5 className='text-xl'>{productData.name}</h5>
-                <h6>{productData.description}</h6>
+            const isCurrentPackage = productData.name
+              ?.toLowerCase()
+              .includes(subscription?.role as string);
+            return (
+              <div className='flex justify-between mt-5' key={productKey}>
+                <div>
+                  <h5 className='text-xl'>{productData.name}</h5>
+                  <h6>{productData.description}</h6>
+                </div>
+                <button
+                  className={
+                    isCurrentPackage
+                      ? 'text-black bg-slate-400 rounded px-5'
+                      : 'text-white bg-red-500 px-5 rounded'
+                  }
+                  onClick={() =>
+                    !isCurrentPackage &&
+                    loadCheckout(productData.prices.priceId)
+                  }
+                >
+                  {!isCurrentPackage ? t('subscribe') : t('subscribed')}
+                </button>
               </div>
-              <button
-                className={isCurrentPackage?"text-black bg-slate-400 rounded px-5":'text-white bg-red-500 px-5 rounded'}
-                onClick={() => !isCurrentPackage&& loadCheckout(productData.prices.priceId)}
-              >
-               {!isCurrentPackage?t('subscribe'):t('subscribed')} 
-              </button>
-            </div>
-          )}
+            );
+          }
         )}
     </>
   );

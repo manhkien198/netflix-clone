@@ -59,3 +59,5 @@ export const NAV: NavProps[] = [
   },
 ];
 export const SKELETON_COUNTS = 10;
+export const UNAVAILABLE_IMG =
+  'https://upload.wikimedia.org/wikipedia/commons/f/fc/No_picture_available.png';

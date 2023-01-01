@@ -9,6 +9,7 @@ import './i18n';
 import { auth } from './services/firebase';
 import { useAppDispatch } from './store/hooks';
 import { login, logout } from './store/slices/authSlice';
+import 'react-loading-skeleton/dist/skeleton.css';
 
 function App() {
   const router = createBrowserRouter(ROUTES);

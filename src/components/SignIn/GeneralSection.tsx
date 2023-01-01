@@ -17,7 +17,7 @@ export default function GeneralSection({
   return (
     <Section>
       <div
-        className={`flex sm:flex-wrap sm:justify-center md:flex-nowrap md:justify-between items-center max-w-[1100px] mx-auto gap-10`}
+        className={`flex xs:flex-wrap xs:justify-center md:justify-between items-center max-w-[1100px] mx-auto gap-10`}
         style={reverse ? { flexDirection: 'row-reverse' } : {}}
       >
         <div className='w-[52%]'>
