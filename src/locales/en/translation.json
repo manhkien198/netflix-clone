@@ -31,14 +31,20 @@
   "answer5": "Netflix has an extensive library of feature films, documentaries, TV shows, anime, award-winning Netflix originals, and more. Watch as much as you want, anytime you want.",
   "question6": "Is Netflix good for Kids",
   "answer6": "The Netflix Kids experience is included in your membership to give parents control while kids enjoy family-friendly TV shows and movies in their own space.Kids profiles come with PIN-protected parental controls that let you restrict the maturity rating of content kids can watch and block specific titles you don’t want kids to see.",
-  "getStarted":"Get Started",
-  "signIn":"Sign In",
-  "signOut":"Sign Out",
-  "profile":"Profile",
-  "play":"Play",
-  "info":"More Info",
-  "subscribe":"Subscribe",
-  "subscribed":"Subscribed"
-
-
+  "getStarted": "Get Started",
+  "signIn": "Sign In",
+  "signOut": "Sign Out",
+  "profile": "Profile",
+  "play": "Play",
+  "info": "More Info",
+  "subscribe": "Subscribe",
+  "subscribed": "Subscribed",
+  "signInSuccess": "Sign in successfully",
+  "signUpSuccess": "Sign up successfully",
+  "email": "Email or phone number",
+  "password": "Password",
+  "signUpNow": "Sign Up Now",
+  "newNetflix": "New to Netflix",
+  "needHelp": "Need help?",
+  "completeSignUp": "Complete sign up"
 }

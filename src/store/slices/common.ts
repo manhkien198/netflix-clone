@@ -6,7 +6,7 @@ interface InitProps {
   subscription: SubscriptionProps | null;
 }
 const initialState: InitProps = {
-  lang: '',
+  lang: localStorage.getItem('i18nextLng') || '',
   subscription: null,
 };
 export const CommonSlice = createSlice({

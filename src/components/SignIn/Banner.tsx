@@ -5,6 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { ChangeEvent, useState } from 'react';
 import { useAppSelector } from '../../store/hooks';
 import { authSelect } from '../../store/slices/authSlice';
+import { selectCommon } from '../../store/slices/common';
 
 const Banner = () => {
   const { t } = useTranslation();
@@ -12,8 +13,9 @@ const Banner = () => {
   const handleChangeEmail = (e: ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
   };
-  const {user}=useAppSelector(authSelect)
-const navigate = useNavigate()
+  const { user } = useAppSelector(authSelect);
+  const { subscription } = useAppSelector(selectCommon);
+  const navigate = useNavigate();
   return (
     <>
       <div className='sm:h-[643px] md:h-[807px] lg:h-[767.094px] absolute inset-0  border-b-8 border-[#222] b-0'>
@@ -24,31 +26,38 @@ const navigate = useNavigate()
       <div className='relative z-20 mx-auto max-w-[950px] text-center sm:py-[20px] md:py-[100px] sm:px-[3%] md:px-[5%] max-h-[563px]'>
         <h1 className='text-5xl text-white font-bold mx-32'>{t('slogan')}</h1>
         <h2 className='py-4 px-10 text-3xl text-white'>{t('subtitle')}</h2>
-        {user?(
-          <button className='px-2 py-[11px] bg-[#e50914]' onClick={()=>navigate('/profile')}>Hoàn tất đăng ký</button>
-         ):<div>
-          <h3 className='text-xl text-white mx-16 pb-10'>
-            {t('titleAddMail')}
-          </h3>
-          <div className='flex max-w-[700px] md:flex-row md:gap-0 md:items-stretch sm:items-center sm:flex-col sm:gap-5 mx-auto'>
-            <div className='grow  sm:w-[500px]'>
-              <input
-                type='text'
-                className='w-full h-full pl-5'
-                placeholder='Email address'
-                onChange={handleChangeEmail}
-              />
+        {user && !subscription ? (
+          <button
+            className='px-2 mt-10 py-[11px] bg-[#e50914]'
+            onClick={() => navigate('/profile')}
+          >
+            {t('completeSignUp')}
+          </button>
+        ) : (
+          <div>
+            <h3 className='text-xl text-white mx-16 pb-10'>
+              {t('titleAddMail')}
+            </h3>
+            <div className='flex max-w-[700px] md:flex-row md:gap-0 md:items-stretch sm:items-center sm:flex-col sm:gap-5 mx-auto'>
+              <div className='grow  sm:w-[500px]'>
+                <input
+                  type='text'
+                  className='w-full h-full pl-5'
+                  placeholder='Email address'
+                  onChange={handleChangeEmail}
+                />
+              </div>
+              <Link to='/signin' state={{ email }}>
+                <button className='px-2 py-[11px] bg-[#e50914] border-l border-solid border-black rounded-r-[2px] flex justify-center items-center'>
+                  <span className='text-white text-[1.625rem] leading-none'>
+                    {t('getStarted')}
+                  </span>{' '}
+                  <MdArrowForwardIos />
+                </button>
+              </Link>
             </div>
-            <Link to='/signin' state={{ email }}>
-              <button className='px-2 py-[11px] bg-[#e50914] border-l border-solid border-black rounded-r-[2px] flex justify-center items-center'>
-                <span className='text-white text-[1.625rem] leading-none'>
-                  {t('getStarted')}
-                </span>{' '}
-                <MdArrowForwardIos />
-              </button>
-            </Link>
           </div>
-        </div>}
+        )}
       </div>
     </>
   );
