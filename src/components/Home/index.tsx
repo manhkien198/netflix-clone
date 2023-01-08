@@ -32,11 +32,11 @@ export default function Home() {
             </div>
           </div>
           <div className='mt-20'>
-            <Row api={api.getNowPlaying} title='Now Playing' type='movie' />
+            <Row api={api.getNowPlaying} title={t('nowPlaying')} type='movie' />
           </div>
-          <Row api={api.getUpComing} title='UpComing' type='movie' />
-          <Row api={api.getTrending} title='Trending Now' type='trending' />
-          <Row api={api.getTopRated} title='Top Rated' type='movie' />
+          <Row api={api.getUpComing} title={t('upComing')} type='movie' />
+          <Row api={api.getTrending} title={t('trendingNow')} type='trending' />
+          <Row api={api.getTopRated} title={t('topRated')} type='movie' />
           <Row api={api.getTv} title='TV' type='tv' />
         </div>
       ) : (
