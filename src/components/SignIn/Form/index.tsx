@@ -73,8 +73,8 @@ export default function SignInForm() {
                   })
                 );
               });
+              navigate('/');
             });
-            navigate('/');
           }
         })
         .catch((error) => toast.error(error.message));
