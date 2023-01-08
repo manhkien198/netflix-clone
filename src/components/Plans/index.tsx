@@ -47,14 +47,15 @@ export default function Plans() {
     });
   }, []);
   const loadCheckout = async (priceId: string) => {
-    const docRef = await addDoc(
-      collection(doc(db, 'customers', user.id), 'checkout_sessions'),
-      {
-        price: priceId,
-        success_url: window.location.origin,
-        cancel_url: window.location.origin,
-      }
+    const checkoutSessionsRef = collection(
+      doc(db, 'customers', user.uid),
+      'checkout_sessions'
     );
+    const docRef = await addDoc(checkoutSessionsRef, {
+      price: priceId,
+      success_url: window.location.origin,
+      cancel_url: window.location.origin,
+    });
     onSnapshot(docRef, async (doc) => {
       const { error, sessionId } = doc.data() as any;
       if (error) {
